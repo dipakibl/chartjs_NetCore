@@ -1,0 +1,284 @@
+﻿@model List<User_Account>
+@{
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.UserName).ToList());
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Sales).ToList());
+    var YValues1 = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Income).ToList());
+    ViewData["Title"] = "Account";
+}
+<style>
+    .outer-w3-agile {
+        padding: 2em 1em;
+        -webkit-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.25);
+        -moz-box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.25);
+        box-shadow: 0px 0px 11px 0px rgba(0, 0, 0, 0.25);
+        background: #fff;
+    }
+
+    h2.main-title-w3layouts {
+        font-size: 3.9em;
+        letter-spacing: 4px;
+        color: #292929;
+        text-shadow: 2px 2px 3px #838386;
+        text-transform: capitalize;
+    }
+
+    h4.tittle-w3-agileits {
+        font-size: 2em;
+        letter-spacing: 1.5px;
+        font-weight: 600;
+        color: #3e3e3e;
+        text-align: center;
+    }
+
+    .mb-4, .my-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .mt-3, .my-3 {
+        margin-top: 1rem !important;
+    }
+
+    .mb-2, .my-2 {
+        margin-bottom: .5rem !important;
+    }
+</style>
+<html>
+<body>
+    <div class="wrapper">
+        <div>
+            <h2 class="main-title-w3layouts mb-2 text-center">Sales And Income Charts</h2>
+            <div class="outer-w3-agile mt-3">
+                <h4 class="tittle-w3-agileits mb-4">Bar Chart</h4>
+                <canvas id="myChart" style="width:100%; height:350px"></canvas>
+            </div>
+            <div class="outer-w3-agile mt-3">
+                <h4 class="tittle-w3-agileits mb-4">Line Chart</h4>
+                <canvas id="myChartline" style="width:100%; height:350px"></canvas>
+            </div>
+            <div class="outer-w3-agile mt-3">
+                <h4 class="tittle-w3-agileits mb-4">pie Chart</h4>
+                <canvas id="myChartpie" style="width:100%; height:350px"></canvas>
+            </div>
+
+        </div>
+    </div>
+    <script src="~/Chart.js/Chart.js"></script>
+    <script>
+       var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        datasets: [{
+            data: @Html.Raw(YValues),
+            label: 'Today Sales',
+
+            // This binds the dataset to the left y axis
+            yAxisID: 'left-y-axis',
+             backgroundColor: [
+
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)'
+                    ],
+                    borderColor: [
+                       'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)'
+                    ],
+                    borderWidth: 1
+        }, {
+            data: @Html.Raw(YValues1),
+            label: 'Today Income ',
+
+            // This binds the dataset to the right y axis
+                yAxisID: 'right-y-axis',
+               backgroundColor: [
+
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)'
+                    ],
+                    borderColor: [
+                       'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)'
+                    ],
+                    borderWidth: 1
+        }],
+        labels: @Html.Raw(XLabels),
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                id: 'left-y-axis',
+                type: 'linear',
+                position: 'left'
+            }, {
+                id: 'right-y-axis',
+                type: 'linear',
+                position: 'right'
+                }]
+
+        }
+    }
+});
+
+
+       var ctx = document.getElementById('myChartline').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        datasets: [{
+            data: @Html.Raw(YValues),
+            label: 'Today Sales',
+
+            // This binds the dataset to the left y axis
+            yAxisID: 'left-y-axis',
+             backgroundColor: [
+
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)'
+                    ],
+                    borderColor: [
+                       'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)'
+                    ],
+                    borderWidth: 1
+
+        }, {
+            data: @Html.Raw(YValues1),
+            label: 'Today Income ',
+
+            // This binds the dataset to the right y axis
+                yAxisID: 'right-y-axis',
+             backgroundColor: [
+
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)'
+                    ],
+                    borderColor: [
+                       'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)'
+                    ],
+                    borderWidth: 1
+        }],
+        labels: @Html.Raw(XLabels),
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                id: 'left-y-axis',
+                type: 'linear',
+                position: 'left'
+            }, {
+                id: 'right-y-axis',
+                type: 'linear',
+                position: 'right'
+            }]
+        }
+    }
+    });
+
+
+     var ctx = document.getElementById('myChartpie').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: @Html.Raw(YValues),
+                    label: 'Today Sales',
+
+                    // This binds the dataset to the left y axis
+                    yAxisID: 'left-y-axis',
+                     backgroundColor: [
+
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)',
+                        'rgba(255, 0, 0, 0.6)'
+                    ],
+                    borderColor: [
+                       'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)',
+                        'rgba(255, 0, 0, 0.9)'
+                    ],
+                    borderWidth: 1
+
+                }, {
+                    data: @Html.Raw(YValues1),
+                    label: 'Today Income ',
+
+                    // This binds the dataset to the right y axis
+                        yAxisID: 'right-y-axis',
+                     backgroundColor: [
+
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)',
+                        'rgba(0, 295, 0, 0.6)'
+                    ],
+                    borderColor: [
+                       'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)',
+                        'rgba(0, 295, 0, 0.9)'
+                    ],
+                    borderWidth: 1
+                }],
+                labels: @Html.Raw(XLabels),
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        id: 'left-y-axis',
+                        type: 'linear',
+                        position: 'left'
+                    }, {
+                        id: 'right-y-axis',
+                        type: 'linear',
+                        position: 'right'
+                    }]
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
